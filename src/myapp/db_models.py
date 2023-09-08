@@ -1,14 +1,9 @@
-# ---------imports from this package---------------------------------------------
+import os
 from myapp import db, ILLEGAL_GENRES
-
-# -------------------------------------------------------------------------------
 from letterboxd_scrape import find_tmdbid
-
-# -------------------------------------------------------------------------------
 import tmdbsimple as tmdb
 
-tmdb.API_KEY = "16ad04eac7474f843aee81afa07997f7"
-# -------------------------------------------------------------------------------
+tmdb.API_KEY = os.environ["TMDB_API_KEY"]
 
 movie_genres = db.Table(
     "movie_genres",
