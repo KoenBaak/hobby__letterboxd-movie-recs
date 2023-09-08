@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<br><br>
+<center><h1>Recommendations for {{ username }}</h1>
+
+<br>
+<div class = 'container'>
+<input class='form-control' id='titleSearch' type='text' placeholder="Search a Title">
+<br>
+<input class='form-control' id='directorSearch' type='text' placeholder="Search a Director">
+</div>
+
+<div class="form-group">
+    <label for="formControlRange">Only Movies After...</label>
+    <input type="range" class="form-control-range" id="yearRange" min=1900 max=2021>
+</div>
+
+<br>
+
+<div class="row" id = 'movieContainer'>
+  {% for movie, prediction in movies %}
+  <div class="col-sm-6">
+    <div class="card" style="width: 18rem;">
+      <img src='{{ movie.poster_path() }}' class="card-img-top" alt='...' loading='lazy'>
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }} - {{ movie.year }}</h5>
+        {% if movie.title != movie.original_title %}
+        <h6 class="card-subtitle mb-2 text-muted">{{ movie.original_title }}</h6>
+        {% endif %}
+        <p class="card-text text-primary">prediction:<b> {{ prediction }}</b></p>
+        <div class='collapse' id = 'collapse_{{ movie.letterboxd_link }}'>
+          <p class="card-text" id = 'director'><b>{{ movie.director_string() }}</b></p>
+          <p class="card-text">{{ movie.synopsis }}</p>
+          {% for genre in movie.genres %}
+          <span class="badge badge-secondary">{{ genre.name }}</span>
+          {% endfor %}
+        </div>
+        <div class="card-footer">
+          <a data-toggle="collapse" href='#collapse_{{ movie.letterboxd_link }}' role="button" aria-expanded="false" aria-controls="collapseExample">
+            ...
+          </a>
+        </div>
+      </div>
+    </div>
+  <br><br>
+  </div>
+  {% endfor %}
+</div>
+</center>
+
+{% endblock %}
+
+{% block page_scripts %}
+
+<script type="text/javascript" charset="utf-8">
+  
+  $(document).ready(function () {
+    
+    function filterFilms () {
+        var titleSearch = $("#titleSearch").val().toLowerCase();
+        var directorSearch = $("#directorSearch").val().toLowerCase();
+        var year = $("#yearRange").val();
+        
+        $(".col-sm-6").filter(function () {
+          var title = $(this).find(".card-title").text().toLowerCase();
+          var correctTitle = title.indexOf(titleSearch) > -1;
+          var correctOTitle = $(this).find(".card-subtitle").text().toLowerCase().indexOf(titleSearch) > -1;
+          correctTitle = correctTitle || correctOTitle;
+          var correctDirector = $(this).find("#director").text().toLowerCase().indexOf(directorSearch) > -1;
+          var correctYear = title.substr(title.length-4) > year;
+          $(this).toggle(correctTitle && correctDirector && correctYear); 
+        });
+         
+    }
+    
+    $("#directorSearch").on("keyup", function () {
+      filterFilms();
+    });
+    
+    $("#titleSearch").on("keyup", function () {
+      filterFilms();
+    });
+    
+    $("#yearRange").on("input", function () {
+      filterFilms();
+    });
+    
+  });
+
+</script>
+{% endblock %}
+
+
+
+

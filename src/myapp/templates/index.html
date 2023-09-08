@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <br><br>
+    <center>
+    <h1>Let Letterboxd's Most Popular Users Recommend You!</h1>
+    <p>Letterboxd is an online community of movie lovers where users can rate and review movies. On this site lives a movie recommendation system that is build on the data of Letterboxd's most popular users. Just fill in your Letterboxd username and get personalized movie recommendations!<p>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}
+            {{ form.username }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p><button class="btn btn-primary" type="submit">Recommend Me!</button></p>
+    </form>
+    </center>
+{% endblock %}
+
+{% block page_scripts %}
+
+<script type="text/javascript" charset='utf-8'>
+
+  $('document').ready(function(){
+     $('#submit').attr('type', 'button');
+     $('#submit').attr('class', 'btn btn-primary');
+  });
+
+</script>
+
+{% endblock %}
+

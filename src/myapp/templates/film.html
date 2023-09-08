@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+  <h2>{{ movie.title }}</h2>
+  <p>original title: {{ movie.original_title }}<br>
+  year: {{ movie.year }}<br><br>
+  {{ movie.synopsis }}</p><br>
+  <h3>Directors:</h3>
+  {% for d in movie.directors %}
+  {{ d.name }}
+  {% endfor %}
+  <h3>Genres:</h3>
+  {% for g in movie.genres %}
+  {{ g.name }}
+  {% endfor %}
+{% endblock %}
+
+
+
+
+
+
