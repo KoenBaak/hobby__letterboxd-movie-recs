@@ -3,7 +3,7 @@ This file is not tested on GitHub upload in 2023
 
 - It was originally used to create the dataset for the model training.
 - Data is stored as pickles.
-- On project upload, the raw dataset was converted to a feather file.
+- On project upload, the raw dataset was converted to a json file.
 """
 import requests
 from bs4 import BeautifulSoup
