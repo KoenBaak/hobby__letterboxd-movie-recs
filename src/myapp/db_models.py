@@ -3,8 +3,6 @@ from myapp import db, ILLEGAL_GENRES
 from letterboxd_scrape import find_tmdbid
 import tmdbsimple as tmdb
 
-tmdb.API_KEY = os.environ["TMDB_API_KEY"]
-
 movie_genres = db.Table(
     "movie_genres",
     db.Column("movie_link", db.String, db.ForeignKey("movies.letterboxd_link")),
@@ -80,6 +78,7 @@ class Movie(db.Model):
 
 
 def make_movie(letterboxd_link):
+    tmdb.API_KEY = os.environ["TMDB_API_KEY"]
     mid = find_tmdbid(letterboxd_link)
     movie = tmdb.Movies(mid)
     movie.info()

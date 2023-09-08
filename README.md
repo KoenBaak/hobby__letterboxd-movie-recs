@@ -26,6 +26,7 @@ in json and csv files and functions are written to read these formats.
 
 ## Running
 - Install the requirements
+- Make sure you are in the src directory
 - Run the file ``main.py``
 
 ![Example of Recommendations](readme_example_img.png)
